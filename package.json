@@ -1,0 +1,21 @@
+{
+  "name": "drumroll",
+  "version": "0.0.1",
+  "description": "Play the drumrolls while running another command",
+  "bin": {
+    "drumroll": "./bin.js"
+  },
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bibixx/drumroll"
+  },
+  "author": "Bartosz Legięć (@bibixx)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bibixx/drumroll/issues"
+  },
+  "homepage": "https://github.com/bibixx/drumroll"
+}
