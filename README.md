@@ -1,5 +1,8 @@
 # drumroll
 
+[![npm](https://img.shields.io/npm/dt/play-drumroll.svg)](https://www.npmjs.com/package/play-drumroll)
+![CircleCI branch](https://img.shields.io/circleci/project/github/bibixx/drumroll/master.svg)
+
 Play drumroll while running another command
 
 Original package and inspiration by [@mafintosh's](https://github.com/mafintosh/) [benny-hill](https://github.com/mafintosh/benny-hill)
