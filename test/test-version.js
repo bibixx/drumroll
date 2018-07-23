@@ -1,5 +1,5 @@
 const { exec } = require("child_process");
-const pkg = require("./package.json");
+const pkg = require("../package.json");
 
 const cmd = `npm view ${pkg.name} version`;
 const execute = new Promise((resolve, reject) => exec(cmd, (error, stdout) => {

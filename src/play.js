@@ -1,21 +1,26 @@
 const childProcess = require("child_process");
-const utils = require("./utils.js");
+
+const { hasCommand } = require("./utils");
 
 const respawns = {};
 
-function play(filename, platform, innerCmd) {
-  if (filename === undefined) {
-    throw new Error();
+function play(filename) {
+  if (!filename) {
+    throw new Error("No filename given!");
+  }
+
+  if (respawns[filename] !== undefined) {
+    return respawns[filename];
   }
 
   const args = [filename];
   let bin = "play";
 
-  if (platform === "darwin") {
+  if (process.platform === "darwin") {
     bin = "afplay";
   }
 
-  if (utils.hasCommand("mplayer")) {
+  if (hasCommand("mplayer")) {
     bin = "mplayer";
 
     args.unshift("-really-quiet");
@@ -26,7 +31,11 @@ function play(filename, platform, innerCmd) {
   proc.stderr.resume();
   proc.unref();
 
-  if (innerCmd !== undefined) {
+  proc.on("exit", () => {
+    proc.kill();
+  });
+
+  if (process.argv[2]) {
     proc.stdout.unref();
     proc.stderr.unref();
     proc.stdin.unref();
@@ -37,4 +46,4 @@ function play(filename, platform, innerCmd) {
   return proc;
 }
 
-module.exports = { play };
+module.exports = play;

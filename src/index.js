@@ -1,41 +1,37 @@
+#!/usr/bin/env node
 const childProcess = require("child_process");
 
 const play = require("./play");
-const utils = require("./utils");
+const { getSoundLocation } = require("./utils");
 
-const { memoize } = utils;
-const { FILE_DRUMROLL, FILE_WAH, FILE_SUCCESS } = require("./constants");
+const FILE_DRUMROLL = getSoundLocation("drumroll.mp3");
+const FILE_WAH = getSoundLocation("wah.mp3");
+const FILE_SUCCESS = getSoundLocation("success.mp3");
 
-const run = () => {
-  let innerCmdCode;
+const drumrollProcess = play(FILE_DRUMROLL);
+let innerCmdCode;
 
-  const [,, innerCmd, ...innerArgs] = process.argv;
-  const memoPlay = memoize(play.play);
-  const playSound = filename => memoPlay(filename, process.platform, innerCmd);
-  const drumrollProcess = playSound(FILE_DRUMROLL);
+const [,, innerCmd, ...innerArgs] = process.argv;
 
-  if (innerCmd) {
-    const commandProcess = childProcess.spawn(
-      innerCmd,
-      innerArgs,
-      { stdio: "inherit" }
-    );
+if (innerCmd) {
+  const commandProcess = childProcess.spawn(
+    innerCmd,
+    innerArgs,
+    { stdio: "inherit" }
+  );
 
-    commandProcess.on("exit", (code) => {
-      innerCmdCode = code;
-      if (code === 0) {
-        playSound(FILE_SUCCESS);
-      } else {
-        playSound(FILE_WAH);
-      }
-    });
-  }
-
-  process.on("exit", () => {
-    drumrollProcess.kill();
-
-    process.exit(innerCmdCode);
+  commandProcess.on("exit", (code) => {
+    innerCmdCode = code;
+    if (code !== 0) {
+      play(FILE_WAH);
+    } else {
+      play(FILE_SUCCESS);
+    }
   });
-};
+}
 
-module.exports = run;
+process.on("exit", () => {
+  drumrollProcess.kill();
+
+  process.exit(innerCmdCode);
+});
