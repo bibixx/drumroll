@@ -2,15 +2,23 @@
   "name": "play-drumroll",
   "version": "0.0.3",
   "description": "Play the drumrolls while running another command",
+  "engines" : {
+    "node" : ">=6.0.0"
+  },
   "bin": {
-    "drumroll": "./bin.js"
+    "drumroll": "./src/index.js"
   },
   "scripts": {
-    "test:version": "node test-version.js"
+    "lint": "eslint ./src",
+    "test:version": "node test/test-version.js"
   },
   "main": "index.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bibixx/drumroll"
