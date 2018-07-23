@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/dt/play-drumroll.svg)](https://www.npmjs.com/package/play-drumroll)
 ![CircleCI branch](https://img.shields.io/circleci/project/github/bibixx/drumroll/master.svg)
+[![david-dm.org](https://david-dm.org/bibixx/react-adobe-animate/status.svg)](https://david-dm.org/bibixx/react-adobe-animate)
 
 Play drumroll while running another command
 
