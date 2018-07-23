@@ -22,7 +22,7 @@ drumroll npm install -g dat # installing node modules
 
 Make sure to install the following dependencies first if you are on linux
 
-``` bash
+```bash
 sudo apt-get install sox libsox-fmt-mp3
 ```
 
