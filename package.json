@@ -1,6 +1,6 @@
 {
   "name": "play-drumroll",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Play the drumrolls while running another command",
   "engines": {
     "node": ">=6.0.0"
@@ -35,5 +35,10 @@
   "bugs": {
     "url": "https://github.com/bibixx/drumroll/issues"
   },
-  "homepage": "https://github.com/bibixx/drumroll"
+  "homepage": "https://github.com/bibixx/drumroll",
+  "keywords": [
+    "benny-hill",
+    "drumroll",
+    "tests"
+  ]
 }
