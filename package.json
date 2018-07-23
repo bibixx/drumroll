@@ -1,6 +1,6 @@
 {
   "name": "play-drumroll",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Play the drumrolls while running another command",
   "bin": {
     "drumroll": "./bin.js"
