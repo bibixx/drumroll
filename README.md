@@ -12,21 +12,21 @@ Original package and inspiration by [@mafintosh's](https://github.com/mafintosh/
 ```bash
 npm install -g play-drumroll
 
+drumroll npm test # when testing
 drumroll # just play benny hill
 drumroll sleep 10 # play for 10 s
-drumroll make # when compiling
-drumroll npm install -g dat # installing node modules
+drumroll npm install -g http-server # installing node modules
 ```
 
 ## Linux users
 
-Make sure to install the following dependencies first if you are on linux
+Make sure to install the following dependencies first if you are on Linux.
 
 ```bash
 sudo apt-get install sox libsox-fmt-mp3
 ```
 
-Alternatively you can install mplayer and it'll just use that
+Alternatively you can install mplayer and it'll just use that.
 
 ## License
 
