@@ -1,6 +1,6 @@
 {
   "name": "play-drumroll",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Play the drumrolls while running another command",
   "engines": {
     "node": ">=6.0.0"
