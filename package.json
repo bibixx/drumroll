@@ -1,9 +1,9 @@
 {
   "name": "play-drumroll",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Play the drumrolls while running another command",
-  "engines" : {
-    "node" : ">=6.0.0"
+  "engines": {
+    "node": ">=6.0.0"
   },
   "bin": {
     "drumroll": "./src/index.js"
