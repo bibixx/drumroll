@@ -15,16 +15,14 @@
     "test:version": "node test-version.js"
   },
   "main": "index.js",
-  "dependencies": {
-    "jest": "^23.4.1",
-    "mock-require": "^3.0.2",
-    "sinon": "^6.1.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jest": "^21.18.0"
+    "eslint-plugin-jest": "^21.18.0",
+    "jest": "^23.4.1",
+    "sinon": "^6.1.4"
   },
   "repository": {
     "type": "git",
