@@ -13,6 +13,25 @@ jobs:
           name: "Deploy image to npm"
           command: npm publish
 
+  test:
+    docker:
+      - image: circleci/node:carbon
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run:
+          name: "Install dependencies"
+          command: yarn install
+      - run:
+          name: Run eslint
+          command: yarn lint
+      # - run:
+      #     name: Run test
+      #     command: yarn test
+
   test-version:
     docker:
       - image: circleci/node:carbon
@@ -28,9 +47,11 @@ workflows:
   build:
     jobs:
       - test-version
+      - test
       - build:
           requires:
             - test-version
+            - test
           filters:
             branches:
               only:
