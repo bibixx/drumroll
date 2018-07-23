@@ -14,7 +14,7 @@ Original package and inspiration by [@mafintosh's](https://github.com/mafintosh/
 npm install -g play-drumroll
 
 drumroll npm test # when testing
-drumroll # just play benny hill
+drumroll # just play drum roll
 drumroll sleep 10 # play for 10 s
 drumroll npm install -g http-server # installing node modules
 ```
