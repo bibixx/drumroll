@@ -5,6 +5,9 @@
   "bin": {
     "drumroll": "./bin.js"
   },
+  "scripts": {
+    "test:version": "node test-version.js"
+  },
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {},
