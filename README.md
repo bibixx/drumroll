@@ -1,8 +1,8 @@
 # drumroll
 
-[![npm](https://img.shields.io/npm/dt/play-drumroll.svg)](https://www.npmjs.com/package/play-drumroll)
-![CircleCI branch](https://img.shields.io/circleci/project/github/bibixx/drumroll/master.svg)
-[![david-dm.org](https://david-dm.org/bibixx/react-adobe-animate/status.svg)](https://david-dm.org/bibixx/react-adobe-animate)
+[![npm](https://badgen.net/npm/dt/play-drumroll)](https://www.npmjs.com/package/play-drumroll)
+![CircleCI branch](https://badgen.net/circleci/github/bibixx/drumroll/master)
+[![david-dm.org](https://badgen.net/david/dep/bibixx/drumroll)](https://david-dm.org/bibixx/drumroll)
 
 Play drumroll while running another command
 
