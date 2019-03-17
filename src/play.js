@@ -1,21 +1,43 @@
 const childProcess = require("child_process");
+const fs = require("fs");
 const utils = require("./utils.js");
 
 const respawns = {};
 
-function play(filename, platform, innerCmd) {
+function play(filename, platform, innerCmd, loop) {
   if (filename === undefined) {
-    throw new Error();
+    throw new Error("No filename provided");
   }
 
-  const args = [filename];
+  let args = [filename];
   let bin = "play";
 
   if (platform === "darwin") {
     bin = "afplay";
   }
 
-  if (utils.hasCommand("mplayer")) {
+  if (platform === "win32") {
+    if (utils.hasCommand("vlc", platform)) {
+      bin = "vlc";
+    } else if (fs.existsSync("C:\\Program Files\\VideoLAN\\VLC\\vlc.exe")) {
+      bin = "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe";
+    } else if (fs.existsSync("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe")) {
+      bin = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
+    } else {
+      throw new Error("No VLC executable found.");
+    }
+
+    args = [filename, "-I", "null"];
+
+    if (loop) {
+      args.push("--loop");
+    } else {
+      args.push("--play-and-exit");
+      innerCmd = undefined;
+    }
+  }
+
+  if (platform !== "win32" && utils.hasCommand("mplayer", platform)) {
     bin = "mplayer";
 
     args.unshift("-really-quiet");

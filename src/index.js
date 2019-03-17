@@ -8,11 +8,16 @@ const { FILE_DRUMROLL, FILE_WAH, FILE_SUCCESS } = require("./constants");
 
 const run = () => {
   let innerCmdCode;
-
   const [,, innerCmd, ...innerArgs] = process.argv;
   const memoPlay = memoize(play.play);
-  const playSound = filename => memoPlay(filename, process.platform, innerCmd);
-  const drumrollProcess = playSound(FILE_DRUMROLL);
+  const playSound = (filename, loop = false) => memoPlay(
+    filename,
+    process.platform,
+    innerCmd,
+    loop
+  );
+
+  const drumrollProcess = playSound(FILE_DRUMROLL, true);
 
   if (innerCmd) {
     const commandProcess = childProcess.spawn(
@@ -28,12 +33,12 @@ const run = () => {
       } else {
         playSound(FILE_WAH);
       }
+
+      drumrollProcess.kill();
     });
   }
 
   process.on("exit", () => {
-    drumrollProcess.kill();
-
     process.exit(innerCmdCode);
   });
 };
