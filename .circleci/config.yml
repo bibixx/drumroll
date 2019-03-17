@@ -1,9 +1,42 @@
 version: 2
-jobs:
-  build:
+references:
+  nodejs_defaults: &nodejs_defaults
+    working_directory: ~/repo
     docker:
       - image: circleci/node:carbon
 
+jobs:
+  checkout_code:
+    <<: *nodejs_defaults
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .
+
+  build:
+    <<: *nodejs_defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - restore_cache:
+          key: dependency-cache-{{ checksum "~/repo/package.json" }}
+      - run:
+          name: Install node dependencies
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "~/repo/package.json" }}
+          paths:
+            - ~/repo
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .
+
+  deploy:
+    docker:
+      - image: circleci/node:carbon
     steps:
       - checkout
       - run:
@@ -14,29 +47,29 @@ jobs:
           command: npm publish
 
   test:
-    docker:
-      - image: circleci/node:carbon
+    <<: *nodejs_defaults
     steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
+      - attach_workspace:
+          at: ~/repo
       - run:
-          name: "Install dependencies"
-          command: yarn install
-      - run:
-          name: Run eslint
-          command: yarn lint
-      - run:
-          name: Run test
+          name: Run tests
           command: yarn test
 
-  test-version:
-    docker:
-      - image: circleci/node:carbon
+  lint:
+    <<: *nodejs_defaults
     steps:
-      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Run eslint
+          command: yarn eslint
+
+
+  test-version:
+    <<: *nodejs_defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
       - run:
           name: Run version test
           command: yarn test:version
@@ -44,14 +77,30 @@ jobs:
 workflows:
   version: 2
 
-  build:
+  build-and-deploy:
     jobs:
-      - test-version
-      - test
+      - checkout_code
       - build:
+          requires:
+            - checkout_code
+      - test:
+          requires:
+            - build
+      - lint:
+          requires:
+            - build
+      - test-version:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
           requires:
             - test-version
             - test
+            - build
           filters:
             branches:
               only:
