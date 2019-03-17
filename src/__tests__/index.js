@@ -16,6 +16,10 @@ describe("index", () => {
     sinon.stub(childProcess, "spawn");
     sinon.stub(play, "play");
 
+    play.play.returns({
+      kill: jest.fn(),
+    });
+
     process.argv = ["", "", "npm", "run test"];
     process.on = procOnSpy;
 
@@ -49,6 +53,19 @@ describe("index", () => {
     run();
 
     expect(play.play.lastCall.calledWith(location)).toEqual(true);
+  });
+
+  it("should stop drumroll after the command has finished", async () => {
+    childProcess.spawn.returns({
+      on: (e, cb) => cb(),
+    });
+
+    const playSpy = sinon.spy();
+    play.play.returns({ kill: playSpy });
+
+    run();
+
+    expect(playSpy.callCount).toEqual(1);
   });
 
   it("should run command if one was specified", () => {
