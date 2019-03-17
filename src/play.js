@@ -33,6 +33,7 @@ function play(filename, platform, innerCmd, loop) {
       args.push("--loop");
     } else {
       args.push("--play-and-exit");
+      // eslint-disable-next-line no-param-reassign
       innerCmd = undefined;
     }
   }
