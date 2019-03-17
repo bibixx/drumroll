@@ -1,5 +1,6 @@
 const sinon = require("sinon");
 const childProcess = require("child_process");
+const fs = require("fs");
 const { play } = require("../play");
 const utils = require("../utils");
 
@@ -46,7 +47,6 @@ describe("play", () => {
     ["linux", "play"],
     ["openbsd", "play"],
     ["sunos", "play"],
-    ["win32", "play"],
   ])(
     "if platform is \"%s\" should use \"%s\" command to play sound",
     (platform, expectedBin) => {
@@ -55,6 +55,43 @@ describe("play", () => {
       expect(childProcess.spawn.calledWith(expectedBin)).toEqual(true);
     }
   );
+
+  describe("if possible platform win32", () => {
+    const platform = "win32";
+
+    it("should play sound using vlc command from $PATH", () => {
+      utils.hasCommand.callsFake(cmd => cmd === "vlc");
+
+      play("", platform, "");
+
+      expect(childProcess.spawn.calledWith("vlc")).toEqual(true);
+    });
+
+    it("should play sound using vlc.exe from 'Program Files (x86)'", () => {
+      const vlcPath = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
+
+      sinon.stub(fs, "existsSync");
+      fs.existsSync.callsFake(path => path === vlcPath);
+
+      play("", platform, "");
+
+      expect(childProcess.spawn.calledWith(vlcPath)).toEqual(true);
+
+      fs.existsSync.restore();
+    });
+
+    it("should play sound using vlc.exe from 'Program Files'", () => {
+      const vlcPath = "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe";
+      sinon.stub(fs, "existsSync");
+      fs.existsSync.callsFake(() => true);
+
+      play("", platform, "");
+
+      expect(childProcess.spawn.calledWith(vlcPath)).toEqual(true);
+
+      fs.existsSync.restore();
+    });
+  });
 
   it("should use \"mplayer\" if it is available", () => {
     utils.hasCommand.returns(true);
