@@ -19,6 +19,12 @@ drumroll sleep 10 # play for 10 s
 drumroll npm install -g http-server # installing node modules
 ```
 
+## Windows users
+
+This package is only compatible on windows while using bash (eg. Git Bash).
+
+Apart from it you have to have [VLC](https://www.videolan.org/vlc/index.html) installed.
+
 ## Linux users
 
 Make sure to install the following dependencies first if you are on Linux.
